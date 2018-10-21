@@ -1,13 +1,12 @@
-import shlex
 import random
+import shlex
 
+import constants
 import database
 import groupme_api as groupme
-import constants
 
 
 def handle_command_message(message, bot_id, user_level):
-    # type: (str) -> str
     without_slash = message[1:].replace(u'\xa0', u' ').replace(u'\u201c', u'"').replace(u'\u201d', u'"')
 
     words = map(lambda s: s.decode('UTF8'), shlex.split(without_slash.encode('utf8')))
@@ -160,9 +159,8 @@ def leaderboard(args, bot_id, db):
         i += 1
         leaderboard_text += str(i) + ". " + row[0] + " - " + str(row[1]) + "\n"
 
-    print "posting leaderboard"
     groupme.post_message(leaderboard_text, bot_id)
-    print "posted leaderboard"
+
     return True
 
 
@@ -199,6 +197,7 @@ def say_in_group(args, bot_id, db):
     return True
 
 
+# For all you Westworld fans out there
 def freeze_all_motor_functions(args, bot_id, db):
     # type: ([str], str, database.Database) -> bool
     group_id = db.fetch_group_id_from_bot_id(bot_id)

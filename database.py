@@ -1,5 +1,6 @@
-import MySQLdb
 import os
+
+import MySQLdb
 
 CLOUDSQL_CONNECTION_NAME = os.environ.get('CLOUDSQL_CONNECTION_NAME')
 CLOUDSQL_USER = os.environ.get('CLOUDSQL_USER')
@@ -184,10 +185,7 @@ class Database:
         c = self.db.cursor()
         c.execute("""SELECT groupID FROM groups WHERE active = TRUE AND groupID = %s""", (group_id,))
 
-        if not c.rowcount:
-            return False
-        else:
-            return True
+        return bool(c.rowcount)
 
     def activate_group(self, group_id):
         c = self.db.cursor()
